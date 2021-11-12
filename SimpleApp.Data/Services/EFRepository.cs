@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Partak.Data.Services
+namespace SimpleApp.Data.Services
 {
     public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {

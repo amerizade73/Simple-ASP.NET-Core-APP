@@ -14,14 +14,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Partak.Data
+namespace SimpleApp.Data
 {
     public class SqlServerApplicationDbContext : DbContext, IApplcationDbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public SqlServerApplicationDbContext(DbContextOptions options) : base(options)
         {
-            optionsBuilder.UseSqlServer("Data Source=.; Initial Catalog=SimpleAppDB;Integrated Security=true;");
+
         }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source=.; Initial Catalog=SimpleAppDB;Integrated Security=true;");
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration<Person>(new PersonConfiguration());

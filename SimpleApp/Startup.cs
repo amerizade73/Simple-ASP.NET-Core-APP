@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SimpleApp.Data;
+using SimpleApp.Data.Domain;
+using SimpleApp.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +27,13 @@ namespace SimpleApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddMemoryCache();
+            services.AddDbContextPool<IApplcationDbContext, SqlServerApplicationDbContext>(options => options.UseSqlServer("Data Source=.; Initial Catalog=SimpleAppDB;Integrated Security=true;"), poolSize: 16);
+            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+
+            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+
+            services.AddScoped<IService<Person>, PersonService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

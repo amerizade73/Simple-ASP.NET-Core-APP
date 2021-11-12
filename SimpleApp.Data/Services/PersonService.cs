@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SimpleApp.Data.Services
 {
-    public class PersonService
+    public class PersonService : IService<Person>
     {
         private readonly IRepository<Person> _personRepository = null;
 

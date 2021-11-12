@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Persons";
+}
+
+
+<div class="jumbotron text-center p-1 m-0">
+    <h3>Persons</h3>
+</div>
+
+@try
+{
+    if (TempData["Success"].ToString() != null)
+    {
+        <div class="alert alert-info alert-dismissible" style="margin-top:5px;">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Success!</strong> The person was successfully registered.
+        </div>
+    }
+}
+catch (Exception) { }
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <a href="~/Person/Register?id=0" class="btn btn-success m-1">Register Person</a>
+    </div>
+</div>
+
+<div id="Content">
+
+</div>
+
+<!-- Button to Open the Modal -->
+<button type="button" id="ModalBTN" style="display:none" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Open modal
+</button>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Success</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Person removed successfully.
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            Search();
+        });
+        function Search() {
+            $('#Content').html('<p class="text-center text-danger">Loading ...</p>')
+            $.ajax({
+                type: "GET",
+                url: '/Person/Search',
+                success: function (response) {
+                    $('#Content').html(response)
+                }
+            });
+        }
+        function Delete(id) {
+            let RequestVerificationToken = document.getElementsByName("__RequestVerificationToken")[0].value;
+            $('#Content').html('<p class="text-center text-danger">Loading ...</p>')
+            $.ajax({
+                type: "POST",
+                url: '/Person/Delete',
+                data: { id: id, __RequestVerificationToken: RequestVerificationToken },
+                success: function (response) {
+                    Search(); 
+                    $('#ModalBTN').click();
+                }
+            });
+        }
+    </script>
+}

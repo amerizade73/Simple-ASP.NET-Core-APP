@@ -14,7 +14,6 @@ namespace SimpleApp.Data.Services
     {
         #region Feilds
         private readonly IApplcationDbContext _context = null;
-
         private DbSet<TEntity> entities = null;
         protected virtual DbSet<TEntity> Entities
         {
@@ -31,6 +30,7 @@ namespace SimpleApp.Data.Services
         {
             this._context = context;
         }
+
         public IQueryable<TEntity> Table => Entities;
         public IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
 
@@ -74,7 +74,6 @@ namespace SimpleApp.Data.Services
             await this._context.Set<TEntity>().AddAsync(entity);
             await this._context.SaveChangesAsync();
         }
-
         public async Task UpdateAsync(TEntity entity)
         {
             if (entity == null)

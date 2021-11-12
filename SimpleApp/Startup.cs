@@ -33,7 +33,7 @@ namespace SimpleApp
 
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 
-            services.AddScoped<IService<Person>, PersonService>();
+            services.AddScoped<PersonService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

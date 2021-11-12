@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SimpleApp.Data.Domain.Person>
+@if (Model.Count() > 0)
+{
+    @Html.AntiForgeryToken()
+    int i = 1;
+    <div class="table-responsive box drag">
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark text-center">
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Mobile</th>
+                    <th>Birthday</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="width:20px">@i</td>
+                        <td style="width:100px">@item.FirstName</td>
+                        <td style="width:100px">@item.LastName</td>
+                        <td style="width:100px">@item.Mobile</td>
+                        <td style="width:100px">@item.Birthday.ToShortDateString()</td>
+                        <td style="width:50px">
+                            @if (item.Gender)
+                            {<span>Male</span> }
+                            else
+                            {<span>Female</span>}
+                        </td>
+                        <td style="width:300px">@item.Address</td>
+                        <td class="text-center text-success" style="width:50px"><a class="btn btn-link" href="~/Person/Register?ID=@item.ID">Edit</a></td>
+                        <td class="text-center text-success" style="width:50px"><button onclick="Delete('@item.ID')"  class="btn btn-link">Delete</button></td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <strong>There is no Person.</strong>
+    </div>
+}
+

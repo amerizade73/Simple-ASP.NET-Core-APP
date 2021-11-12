@@ -17,9 +17,9 @@ namespace SimpleApp.Controllers
             _personService = personService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _personService.SearchAsync());
+            return View();
         }
 
         public async Task<IActionResult> Search()
